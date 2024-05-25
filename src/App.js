@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import History from "./Pages/hrPages/History";
+import Leave from "./Pages/hrPages/Leave";
+import Users from "./Pages/hrPages/Users";
+import Layoute from "./layoutes/HRLayoute";
+import Pending from "./Pages/hrPages/PendingLeaves";
+import "./app.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Layoute>
+          {" "}
+          {/* Opening tag for Layoute component */}
+          <Routes>
+            Leave <Route path="/Leave" element={<Leave />} />
+            <Route path="/History" element={<History />} />
+            <Route path="/Users" element={<Users />} />
+            <Route path="/History" element={<History />} />
+            <Route path="/Pending" element={<Pending />} />
+          </Routes>
+        </Layoute>
+      </div>
+    </Router>
   );
 }
 
