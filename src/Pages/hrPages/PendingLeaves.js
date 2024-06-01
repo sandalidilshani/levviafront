@@ -7,9 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import theme from "../../theme";
+import HRLayout from "../../layout/HRLayoute";
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,35 +27,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
+  "&:hover": {
+    cursor: "pointer",
+  },
 }));
-
-function createData(
-  leaveId,
-  leaveStart,
-  leaveEnd,
-  leaveReason,
-  requestDate,
-  leaveType
-) {
-  return { leaveId, leaveStart, leaveEnd, leaveReason, requestDate, leaveType };
-}
-
-
 
 export default function Pending() {
   const [leaverequest, setLeaverequest] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [leaveTypes, setLeaveTypes] = React.useState([]);
-  const [userleavetype,setUserLeaveType]=React.useState(null)
-
+  const leaveDetails = useNavigate(); 
   React.useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/leaverequest/status/pending")
+      .get("http://localhost:3009/leaverequest/allpendingleaves")
       .then((res) => {
         setLeaverequest(res.data);
       })
@@ -65,78 +54,57 @@ export default function Pending() {
       });
   }, []);
 
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:3001/leavetype/alltypes")
-      .then((res) => {
-        setLeaveTypes(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching leave types:", error);
-      });
-  }, []);
-  const leaveTypeMap = React.useMemo(() => {
-    return (leaveTypeId) => {
-      const typeObj = leaveTypes.find((type) => type.id === leaveTypeId);
-      return typeObj ? typeObj.name : '';
-     
-
-    };
-  }, [leaveTypes]);
-
-  const handleLeaveRequestEdit = (event) => {
-    
-  };
-
-
   return (
-    <Box sx={{ bgcolor:theme.palette.primary.light, flex: 5, justifyContent: "space-between" }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-            <StyledTableCell>User </StyledTableCell>
-              <StyledTableCell>leaveId </StyledTableCell>
-              <StyledTableCell align="right">leaveStart</StyledTableCell>
-              <StyledTableCell align="right">leaveEnd</StyledTableCell>
-              <StyledTableCell align="right">leaveReason</StyledTableCell>
-              <StyledTableCell align="right">LaeaveType</StyledTableCell>
-              <StyledTableCell align="right">requestDate</StyledTableCell>
-
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {leaverequest.map((request) => (
-                
-              <StyledTableRow key={request.leaveId}>
-                <StyledTableCell component="th" scope="row">
-                  {request.username}
-                </StyledTableCell>
-                <StyledTableCell component="th" scope="row">
-                  {request.leaveId}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.leaveStart}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.leaveEnd}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.leaveReason}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.leaveType.type}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.requestDate}
-                </StyledTableCell>
-                
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <HRLayout>
+      <Box sx={{ bgcolor: theme.palette.primary.light, flex: 5, justifyContent: "space-between" }}>
+        <Typography sx={{ justifyContent: 'center', alignContent: "center" }}>Pending Leaves for your attention</Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>UserId</StyledTableCell>
+                <StyledTableCell>UserName</StyledTableCell>
+                <StyledTableCell>leaveId</StyledTableCell>
+                <StyledTableCell align="right">leaveStart</StyledTableCell>
+                <StyledTableCell align="right">leaveEnd</StyledTableCell>
+                <StyledTableCell align="right">leaveReason</StyledTableCell>
+                <StyledTableCell align="right">requestDate</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {leaverequest.map((request) => (
+                <StyledTableRow
+                  key={request.leaveId}
+                  
+                  onClick={() => leaveDetails("/leave",{state:request.leaveId})} // Redirect to leave details page on row click
+                >
+                  <StyledTableCell component="th" scope="row">
+                    {request.plazeruserid.userid}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {request.plazeruserid.ufname}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {request.leaveId}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {request.leaveStart}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {request.leaveEnd}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {request.leaveReason}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {request.requestDate}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </HRLayout>
   );
- 
 }

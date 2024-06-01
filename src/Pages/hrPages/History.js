@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import { Box, Button } from "@mui/material";
 import axios from "axios";
 import theme from "../../theme";
+import HRLayout from "../../layout/HRLayoute";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,7 +54,7 @@ export default function Pending() {
   React.useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/leaverequest/status/pending")
+      .get("http://localhost:3009/leaverequest/status/pending")
       .then((res) => {
         setLeaverequest(res.data);
       })
@@ -67,9 +68,10 @@ export default function Pending() {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:3001/leavetype/alltypes")
+      .get("http://localhost:3009/leavetype/alltypes")
       .then((res) => {
         setLeaveTypes(res.data);
+        console.log(res.data)
       })
       .catch((error) => {
         console.error("Error fetching leave types:", error);
@@ -83,6 +85,7 @@ export default function Pending() {
 
 
   return (
+    <HRLayout>
     <Box sx={{ bgcolor:theme.palette.primary.light, flex: 5, justifyContent: "space-between" }}>
        
       <TableContainer component={Paper}>
@@ -90,13 +93,14 @@ export default function Pending() {
           <TableHead>
             <TableRow>
               <StyledTableCell>leaveId </StyledTableCell>
+              <StyledTableCell> User </StyledTableCell>
+
               <StyledTableCell align="right">leaveStart</StyledTableCell>
               <StyledTableCell align="right">leaveEnd</StyledTableCell>
               <StyledTableCell align="right">leaveReason</StyledTableCell>
               <StyledTableCell align="right">LaeaveType</StyledTableCell>
               <StyledTableCell align="right">requestDate</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
-
+             
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,6 +108,9 @@ export default function Pending() {
               <StyledTableRow key={request.leaveId}>
                 <StyledTableCell component="th" scope="row">
                   {request.leaveId}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row">
+                  {request.username}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {request.leaveStart}
@@ -120,16 +127,14 @@ export default function Pending() {
                 <StyledTableCell align="right">
                   {request.requestDate}
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {request.staus}
-                </StyledTableCell>
-                
+               
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
+    </HRLayout>
   );
  
 }

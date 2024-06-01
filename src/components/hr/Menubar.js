@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -13,21 +12,17 @@ import PermMedia from "@mui/icons-material/PermMedia";
 import Dns from "@mui/icons-material/Dns";
 import Public from "@mui/icons-material/Public";
 import { Typography } from "@mui/material";
-import Link from "@mui/material/Link";
-import theme from "../../theme";
+import { Link as RouterLink } from "react-router-dom"; 
 import image from "../../components/images/logo.png"
 
 import menuimage from "../images/menu.jpg"
 const data = [
-  { icon: <DashboardCustomizeOutlinedIcon />, label: "DashBoard", link: "/pending" },
+ 
   { icon: <SendOutlinedIcon />, label: "Pending", link: "/pending" },
-  { icon: <Dns />, label: "History", link: "/pending" },
-  { icon: <AllInboxOutlinedIcon />, label: "user", link: "/pending" },
-  { icon: <ContactSupportOutlinedIcon />, label: "Leave", link: "/pending" },
-
+  { icon: <Dns />, label: "History", link: "/history" },
+  { icon: <AllInboxOutlinedIcon />, label: "user", link: "/users" },
+  { icon: <ContactSupportOutlinedIcon />, label: "Leave", link: "/leave" },
 ];
-
-
 
 export const Menubar = () => {
   const [open, setOpen] = React.useState(true);
@@ -36,10 +31,9 @@ export const Menubar = () => {
       sx={{
         flex:'1',
         display: { xs: "none", md: "block" },
-        backgroundImage: `url(${menuimage})`,
+      
         backgroundSize: "cover", 
-        backgroundPosition: "center", 
-        backgroundRepeat: "no-repeat",
+        bgcolor:'#16407A',
         position: 'relative',
          // 
       }}
@@ -63,9 +57,8 @@ export const Menubar = () => {
       <Box sx={{height:'55%'}}>
         {open &&
           data.map((item) => (
-            <Link to="/Pending" style={{ textDecoration: 'none' }}>
+            <RouterLink to={item.link} style={{ textDecoration: 'none' }} key={item.label}>
               <ListItemButton
-                key={item.label}
                 sx={{
                   height: "15%",
                   minWidth: 40,
@@ -89,7 +82,7 @@ export const Menubar = () => {
                   }}
                 />
               </ListItemButton>
-            </Link>
+            </RouterLink>
           ))}
       </Box>
       </Box>

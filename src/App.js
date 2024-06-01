@@ -1,27 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import History from "./Pages/hrPages/History";
+import Login from "./Pages/LoginPage";
 import Leave from "./Pages/hrPages/Leave";
 import Users from "./Pages/hrPages/Users";
-import Layoute from "./layoutes/HRLayoute";
-import Pending from "./Pages/hrPages/PendingLeaves";
+import My from "./Pages/hrPages/My"
+import PendingLeaves from "./Pages/hrPages/PendingLeaves";
 import "./app.css";
-
+import Home from "./Pages/hrPages/Home";
 function App() {
   return (
     <Router>
-      <div>
-        <Layoute>
-          {" "}
-          {/* Opening tag for Layoute component */}
-          <Routes>
-            Leave <Route path="/Leave" element={<Leave />} />
-            <Route path="/History" element={<History />} />
-            <Route path="/Users" element={<Users />} />
-            <Route path="/History" element={<History />} />
-            <Route path="/Pending" element={<Pending />} />
-          </Routes>
-        </Layoute>
-      </div>
+      <Routes>
+        <Route path="login" element={<Login />} />
+        
+          <Route path="my" element={<My />} />
+          <Route path="home" element={<Home />} />
+          <Route path="leave" element={<Leave />} />
+          <Route path="history" element={<History />} />
+          <Route path="users" element={<Users />} />
+          <Route path="pendingleaves" element={<PendingLeaves />} />
+          
+       
+      </Routes>
     </Router>
   );
 }

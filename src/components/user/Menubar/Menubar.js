@@ -15,15 +15,14 @@ import Public from "@mui/icons-material/Public";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
 import theme from "../../../theme";
-import image from "../images/logo.png"
-
-import menuimage from "../images/menu.jpg"
+import image from "../Menubar/logo.png"
+import menuimage from "../../images/menu.jpg"
 const data = [
-  { icon: <DashboardCustomizeOutlinedIcon />, label: "DashBoard", link: "/pending" },
-  { icon: <SendOutlinedIcon />, label: "Request Leave", link: "/pending" },
-  { icon: <Dns />, label: "Pending Laeves", link: "/pending" },
-  { icon: <AllInboxOutlinedIcon />, label: "History", link: "/pending" },
-  { icon: <ContactSupportOutlinedIcon />, label: "Ask anything", link: "/pending" },
+  { icon: <DashboardCustomizeOutlinedIcon />, label: "DashBoard", link: "/user/pending" },
+  { icon: <SendOutlinedIcon />, label: "Request Leave", link: "/user/pending" },
+  { icon: <Dns />, label: "Pending Laeves", link: "/user/pending" },
+  { icon: <AllInboxOutlinedIcon />, label: "History", link: "/user/pending" },
+  { icon: <ContactSupportOutlinedIcon />, label: "Ask anything", link: "/user/pending" },
 
 ];
 
@@ -41,7 +40,7 @@ export const Menubar = () => {
         backgroundPosition: "center", 
         backgroundRepeat: "no-repeat",
         position: 'relative',
-         // 
+        
       }}
     >
       <Box  sx={{
